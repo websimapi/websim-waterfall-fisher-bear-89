@@ -56,9 +56,11 @@ export function createRiggedFish({ scene, score = 0, type = 'classic', opts = {}
     const bodySeg = createVoxel(0, 0, segLen * 0.5, w, h, segLen * 0.98, (isVitiligo && (i === 1 || i === 4)) ? vitiligoPatchMat : bodyMat);
     pivot.add(bodySeg);
 
-    const bellyH = h * 0.25;
-    const belly = createVoxel(0, -h * 0.3, segLen * 0.5, w * 0.95, bellyH, segLen * 0.95, bellyMat);
-    pivot.add(belly);
+    if (i < boneCount - 2) {
+      const bellyH = h * 0.22;
+      const belly = createVoxel(0, -h * 0.26, segLen * 0.5, w * 0.93, bellyH, segLen * 0.92, bellyMat);
+      pivot.add(belly);
+    }
 
     bones.push(pivot);
     segments.push({ mesh: bodySeg, baseRotY: bodySeg.rotation.y, phase: t });
@@ -68,9 +70,9 @@ export function createRiggedFish({ scene, score = 0, type = 'classic', opts = {}
 
   // Tail at end bone
   const tailBaseZ = segLen * 0.5 + 0.10;
-  const tailBase = createVoxel(0, 0.0, tailBaseZ - 0.10, 0.24, 0.60, 0.14, fishTailMat);
-  const tailV = createVoxel(0, 0.0, tailBaseZ + 0.02, 0.045, 0.56, 0.30, fishTailMat);
-  const tailH = createVoxel(0, -0.05, tailBaseZ - 0.04, 0.32, 0.050, 0.18, fishTailMat);
+  const tailBase = createVoxel(0, 0.04, tailBaseZ - 0.10, 0.22, 0.56, 0.14, fishTailMat);
+  const tailV = createVoxel(0, 0.04, tailBaseZ + 0.02, 0.045, 0.54, 0.30, fishTailMat);
+  const tailH = createVoxel(0, -0.01, tailBaseZ - 0.04, 0.30, 0.040, 0.18, fishTailMat);
   /* ensure stable draw ordering for tail parts */
   tailBase.renderOrder = 1; tailV.renderOrder = 2; tailH.renderOrder = 2;
   bones[bones.length - 1].add(tailBase, tailV, tailH);
